@@ -1,5 +1,7 @@
 const express = require ('express');
 const app = express();
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 const mockUserData = [
     {
@@ -19,7 +21,7 @@ app.get('/users', (req, res) =>
         users: mockUserData
     }))
 
-app.listen(8000, () => console.log("server is listening bro!"))
+
 
 app.get('/users/:id', (req, res)  =>{
     console.log(req.params.id)
@@ -29,4 +31,27 @@ app.get('/users/:id', (req, res)  =>{
         user: req.params.id
     })
 })
+
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    const mockUsername = 'billyTheProstitute';
+    const mockPassword = 'superSecret';
+
+    if(username === mockUsername && password === mockPassword){
+        res.json({
+            success: true,
+            message: 'nice baby you get it! 🎉',
+            token: 'encripted token goes here'
+        })
+    }else{
+        res.json({
+            success: false,
+            message: `try againn 🤦‍♂️`
+        })
+    }
+})
+
+app.listen(8000, () => console.log("server is listening bro!"))
 
